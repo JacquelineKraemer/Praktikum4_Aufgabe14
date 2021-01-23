@@ -1,0 +1,68 @@
+// PAD1 - Praktikum 4
+// Aufgabe 14
+// 762199
+
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+const int AnzhalElemente = 10000;   //Feldgröße
+
+void gnomeSort(int array[], int n) //Ablauf der Gnome Sortierung
+{
+   int index = 0;
+   while(index < n)
+   {
+      if(index == 0 || array[index] >= array[index - 1]) // Wenn Zahl gleich groß, oder kleiner, dann Schritt nach rechts
+          index++;
+      else
+      {
+         swap(array[index], array[index - 1]); // Zahlen werden miteinander vertauscht
+         index--; //Schritt nach links
+      }
+   }
+}
+
+int main()
+{
+    // Psuedo-Zufallszahlen-Generator zur Befüllung des zu sortierenden Arrays
+    // Damit diese nicht per Hand eingegeben werden müssen
+    int array[AnzhalElemente]={0};       //Feld
+    int Zufallszahl;
+
+    for (int i=0; i<AnzhalElemente; i++)
+    {
+        Zufallszahl=rand()%AnzhalElemente;   //Generiert eine Zahl
+        array[i] = Zufallszahl;     //Füllt das Feld mit Zufallszahlen
+    }
+
+    for(int i=0; i<AnzhalElemente; i++) //Unsortierte Ausgabe des Arrays
+       {
+           cout << array[i] << " ";
+       }
+
+    cout << endl << endl;
+
+
+    // GnomeSort - Ausgabe der Messung
+    time_t start=time(NULL); //Startzeit in Sekunden
+
+    gnomeSort(array,AnzhalElemente); 
+
+    time_t ende=time(NULL); //Endzeit in Sekunden
+
+
+    for(int i=0; i<AnzhalElemente; i++)
+       {
+           cout << array[i] << " ";
+       }
+
+    int size1 = sizeof(array) / sizeof(array[0]);
+
+    cout << endl << endl;
+    cout << "GnomeSort Messung: " << endl;
+    cout << "Dauer: " << ende-start << " Sekunden" << endl;
+    cout << "Anzahl der Zufallswerte: " << size1 << endl;
+
+    return 0;
+}
